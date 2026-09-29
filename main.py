@@ -828,23 +828,23 @@ def signup(body: Signup):
 
         # Create the first pipeline immediately.
         # db.init() already contains the migration logic.
-        c.execute(
-            """
-            INSERT INTO pipelines(
-                org_id,
-                name,
-                created_at
-            )
-            VALUES(?,?,?)
-            """,
-            (
-                org_id,
-                "Default Sales Pipeline",
-                db.now(),
-            ),
-        )
+       pipeline_cursor = c.execute(
+    """
+    INSERT INTO pipelines(
+        org_id,
+        name,
+        created_at
+    )
+    VALUES(?,?,?)
+    """,
+    (
+        org_id,
+        "Default Sales Pipeline",
+        db.now(),
+    ),
+)
 
-        pipeline_id = c.lastrowid
+pipeline_id = pipeline_cursor.lastrowid
 
         default_stages = [
             ("Discovery", 1, 0, 0),
