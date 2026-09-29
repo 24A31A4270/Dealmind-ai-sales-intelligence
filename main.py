@@ -207,6 +207,23 @@ def recall(org_id: int, q: str):
         )
     )
 
+    # Extract customer name from the query
+    customer = None
+    for line in q.splitlines():
+        if line.lower().startswith("customer:"):
+            customer = line.split(":", 1)[1].strip()
+            break
+
+    results = r.results
+
+    # Keep only memories belonging to the selected customer
+    if customer:
+        customer_lower = customer.lower()
+        results = [
+            m for m in results
+            if customer_lower in (m.text or "").lower()
+        ]
+
     return [
         {
             "text": m.text,
@@ -223,9 +240,8 @@ def recall(org_id: int, q: str):
                 ) or ""
             ),
         }
-        for m in r.results
+        for m in results
     ]
-
 
 # ============================================================
 # GROQ LLM
