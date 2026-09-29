@@ -62,6 +62,7 @@ app.add_middleware(
         "http://localhost:5175",
         "http://localhost:5188",
         "https://dealmind-ai-sales-intelligence.vercel.app",
+        "https://dealmind-three.vercel.app",
     ],
     allow_methods=["*"],
     allow_headers=["*"],
