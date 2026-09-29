@@ -61,7 +61,7 @@ app.add_middleware(
         "http://localhost:5173",
         "http://localhost:5175",
         "http://localhost:5188",
-        "https://dealmind-three.vercel.app",
+        "https://dealmind-ai-sales-intelligence.vercel.app",
     ],
     allow_methods=["*"],
     allow_headers=["*"],
@@ -828,23 +828,23 @@ def signup(body: Signup):
 
         # Create the first pipeline immediately.
         # db.init() already contains the migration logic.
-       pipeline_cursor = c.execute(
-    """
-    INSERT INTO pipelines(
-        org_id,
-        name,
-        created_at
-    )
-    VALUES(?,?,?)
-    """,
-    (
-        org_id,
-        "Default Sales Pipeline",
-        db.now(),
-    ),
-)
+        pipeline_cursor = c.execute(
+            """
+            INSERT INTO pipelines(
+                org_id,
+                name,
+                created_at
+            )
+            VALUES(?,?,?)
+            """,
+            (
+                org_id,
+                "Default Sales Pipeline",
+                db.now(),
+            ),
+        )
 
-pipeline_id = pipeline_cursor.lastrowid
+        pipeline_id = pipeline_cursor.lastrowid
 
         default_stages = [
             ("Discovery", 1, 0, 0),
